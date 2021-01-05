@@ -11,22 +11,16 @@ nr_numbers = int(input(f"How many numbers would you like?\n"))
 
 #Eazy Level - Order not randomised:
 #e.g. 4 letter, 2 symbol, 2 number = JduE&!91
+def pw_random(randomlist, nr_number):
+  while nr_number >= 1:
+    char = random.choice(randomlist)
+    easy_random_pw.append(char)
+    nr_number -= 1
+
 easy_random_pw = []
-for letter in letters:
-  while nr_letters >= 1:
-    char = random.choice(letters)
-    easy_random_pw.append(char)
-    nr_letters -= 1
-for number in numbers:
-  while nr_numbers >= 1:
-    char = random.choice(numbers)
-    easy_random_pw.append(char)
-    nr_numbers -= 1
-for symbol in symbols:
-  while nr_symbols >= 1:
-    char = random.choice(symbols)
-    easy_random_pw.append(char)
-    nr_symbols -= 1
+pw_random(letters, nr_letters)
+pw_random(symbols, nr_symbols)
+pw_random(numbers, nr_numbers)
 
 easy_pw_string = ""
 for char in easy_random_pw:
