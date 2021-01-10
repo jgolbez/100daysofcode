@@ -12,9 +12,7 @@ def caesar_cypher(text, shift, direction):
         shift *= -1
     text_message = ""
     for char in text:
-        if direction == "decode" and char not in alphabet:
-            text_message += char
-        elif direction == "encode" and char not in alphabet: 
+        if char not in alphabet:
             text_message += char
         else:
             cipher_char = alphabet[shift + int(alphabet.index(char))]
