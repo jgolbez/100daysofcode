@@ -8,6 +8,7 @@ shift = int(input("Type the shift number:\n"))
 
 
 def caesar_cypher(text, shift, direction):
+    shift = shift % 26
     if direction == "decode":
         shift *= -1
     text_message = ""
