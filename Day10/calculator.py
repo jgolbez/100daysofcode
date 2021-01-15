@@ -38,6 +38,6 @@ def calculator():
       prev_answer = answer
       answer = calc_result(answer, number2, op_symbol)
       print(f"{prev_answer} {op_symbol} {number2} = {answer}")
-    continue_calc = bool(input(f"Continue calculating with {answer}? Y or N\n").upper() == "Y")
+    continue_calc = input(f"Continue calculating with {answer}? Y or N\n").upper() == "Y"
     
 calculator()
