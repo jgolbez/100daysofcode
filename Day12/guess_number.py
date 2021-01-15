@@ -1,7 +1,6 @@
 import random
 import os
 import sys
-keep_playing = True
 game_over = False
 
 def play_again():
