@@ -44,6 +44,7 @@ def reorient(heading):
 
 
 #Start lower left
+tim.hideturtle()
 tim.penup()
 tim.setheading(225)
 tim.forward(350)
