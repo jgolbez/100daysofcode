@@ -2,21 +2,29 @@ from turtle import Turtle
 
 start_position = [(0,0), (-20, 0), (-40, 0)]
 
-class Snake():
+class Snake(Turtle):
     def __init__(self):
+        super().__init__()
         self.segments = []
         self.new_snake()
         self.head = self.segments[0]
 
     def new_snake(self, shape="square", color="white"):
         for position in start_position:
-            seg = Turtle()
-            seg.shape(shape)
-            seg.color(color)
-            seg.penup()
-            seg.setposition(position)
-            self.segments.append(seg)
+            self.build_snake(position)
+ 
     
+    def build_snake(self, position):
+        seg = Turtle()
+        seg.shape("square")
+        seg.color("white")
+        seg.penup()
+        seg.setposition(position)
+        self.segments.append(seg)
+
+    def add_segment(self):
+        self.build_snake(self.segments[-1].position())
+
     def move(self):
         for seg in range(len(self.segments) - 1, 0, -1):
             self.segments[seg].goto(self.segments[seg - 1].position())
