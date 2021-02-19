@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 import random
 import pyperclip
+import json
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 def pw_generate():
@@ -29,11 +30,41 @@ def save_pw():
         valid = False
         messagebox.showinfo(title="Info Missing", message="Some information is missing, please complete all fields before submitting!")
     if accept and valid:
-        with open("password_list.txt", "a") as pw_list:
-            pw_list.write(f"{website.get()} | {userid.get()} | {password.get()}\n")
-            print("Saved the password")
-        website.delete(0, 'end')
-        password.delete(0, 'end')
+        try:
+            with open("pw.json", "r") as pw_list:
+                #Load current dict data
+                pw_data = json.load(pw_list)
+                #Update old data with new data - pull from filled out fields
+                pw_data.update({website.get(): {"userid": userid.get(), "password": password.get()}})
+        except FileNotFoundError:
+            with open("pw.json", "w") as pw_list:
+                json.dump({website.get(): {"userid": userid.get(), "password": password.get()}}, pw_list, indent=4)
+        else:
+            with open("pw.json", "w") as pw_list:
+                #Dump updated dict back to file
+                json.dump(pw_data, pw_list, indent=4)
+        finally:
+            website.delete(0, 'end')
+            password.delete(0, 'end')
+
+# ---------------------------- SEARCH ------------------------------- #
+def search_pw():
+    print("Searching")
+    search_item = website.get()
+    try:
+        with open("pw.json", "r") as pw_list:
+            # Load current dict data
+            pw_data = json.load(pw_list)
+            password_data = pw_data[search_item]["password"]
+            print(password_data)
+            userid_data = pw_data[search_item]["userid"]
+    except FileNotFoundError:
+        messagebox.showinfo(title="No Entries", message="You have not entered any passwords yet.")
+    except KeyError:
+        messagebox.showinfo(title="Not Found", message="You have not entered a password for this website yet.")
+    else:
+        messagebox.showinfo(title=search_item, message=f"User ID: {userid_data}\n Password: {password_data}")
+
 
 # ---------------------------- UI SETUP ------------------------------- #
 #Create window
@@ -52,8 +83,8 @@ web_label = Label(text="Website:")
 web_label.grid(column=0, row=1)
 
 #Website Input
-website = Entry(width=35)
-website.grid(column=1, row=1, columnspan=2)
+website = Entry(width=30)
+website.grid(column=1, row=1)
 website.focus()
 
 #UserID Label
@@ -80,5 +111,9 @@ pw_button.grid(column=2, row=3)
 #Add PW Button
 add_button = Button(text="Add", width=36, command=save_pw)
 add_button.grid(column=1, row=4, columnspan=2)
+
+#Search Button
+search_button = Button(text="Search", command=search_pw)
+search_button.grid(column=2, row=1)
 
 window.mainloop()
