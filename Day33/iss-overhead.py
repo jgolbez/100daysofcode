@@ -31,8 +31,8 @@ def iss_overhead():
     iss_longitude = float(data["iss_position"]["longitude"])
     print(f"Current ISS Lat: {iss_latitude}")
     print(f"Current ISS Lat: {iss_longitude}")
-    LAT_OK = iss_latitude - 5 < MY_LAT < iss_latitude + 5
-    LONG_OK = iss_longitude -5 < MY_LONG < iss_longitude +5
+    LAT_OK = MY_LAT-5 <= iss_latitude <== MY_LAT+5
+    LONG_OK = MY_LONG-5 <= iss_longitude <= MY_LONG+5
     return LAT_OK and LONG_OK
 
 def dark_sky():
