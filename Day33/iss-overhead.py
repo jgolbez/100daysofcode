@@ -31,7 +31,7 @@ def iss_overhead():
     iss_longitude = float(data["iss_position"]["longitude"])
     print(f"Current ISS Lat: {iss_latitude}")
     print(f"Current ISS Lat: {iss_longitude}")
-    LAT_OK = MY_LAT-5 <= iss_latitude <== MY_LAT+5
+    LAT_OK = MY_LAT-5 <= iss_latitude <= MY_LAT+5
     LONG_OK = MY_LONG-5 <= iss_longitude <= MY_LONG+5
     return LAT_OK and LONG_OK
 
