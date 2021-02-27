@@ -41,6 +41,9 @@ def dark_sky():
     data = response.json()
     sunrise_est = int(data["results"]["sunrise"].split("T")[1].split(":")[0]) - 5
     sunset_est = int(data["results"]["sunset"].split("T")[1].split(":")[0]) - 5
+    print(f"Sunrise: {sunrise_est}")
+    print(f"Sunset: {sunset_est}")
+    print(f"Time: {now_hour}")
     return now_hour > sunset_est or now_hour < sunrise_est
 
 def check_iss_visible():
@@ -61,17 +64,8 @@ while True:
             connection.login(user=my_email, password=email_pw)
             connection.sendmail(
             from_addr=my_email,
-            to_addrs="jgolbez@gmail.com",
+            to_addrs="someone@gmail.com",
             msg="Subject:ISS Now Visible Overhead\n\nAlert! The ISS is now visible in the night sky overhead!"
         )
     print("Sleeping for 60 seconds")
     time.sleep(60)
-
-
-
-
-
-
-
-
-
