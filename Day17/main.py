@@ -8,6 +8,8 @@ for question in question_data:
     new_q = Question(q_text, q_answer)
     question_bank.append(new_q)
 
+
+
 quiz = QuizBrain(question_bank)
 
 while quiz.still_has_questions():
