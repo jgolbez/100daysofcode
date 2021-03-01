@@ -98,9 +98,7 @@ def text_news(stock, news_h, news_d) -> list:
 
 stock_close_price = stock_pull()
 stock_tuple = calc_stock(stock_close_price)
-news_headline = pull_news_headline()
-news_description = pull_news_description()
-text_news(stock_tuple, news_headline, news_description)
+
 
 if stock_tuple[1] > 5:
     news_headline = pull_news_headline()
