@@ -8,7 +8,6 @@ import requests
 # Twilio - For SMS
 from twilio.rest import Client
 
-
 ###--- Data Sources/Global Variables ---###
 ALPHA_API_KEY = config('ALPHA_API_KEY')
 NEWSAPI_API_KEY = config('NEWSAPI_API_KEY')
@@ -26,7 +25,7 @@ news_parameters = {
     "sortBy": "publishedAt",
     "apiKey": NEWSAPI_API_KEY,
 }
-#Twilio API
+# Twilio API
 account_sid = config('TWILIO_SID')
 auth_token = config('TWILIO_AUTH_TOKEN')
 client = Client(account_sid, auth_token)
@@ -41,14 +40,15 @@ def stock_pull():
     response = requests.get(STOCK_ENDPOINT, params=stock_parameters)
     response.raise_for_status()
     stock_dict = response.json()['Time Series (Daily)']
-    close_price = [float(v['4. close']) for (k,v) in stock_dict.items()]
+    close_price = [float(v['4. close']) for (k, v) in stock_dict.items()]
     return close_price
 
+
 # Calculate Stock Data for Notifications
-def calc_stock(close_price):
+def calc_stock(close_price) -> list:
     diff_price = round(abs(close_price[0] - close_price[1]), 2)
     print(f"Dollar Difference: {diff_price}")
-    pct_diff = round(abs(close_price[0] - close_price[1])/close_price[1]*100, 2)
+    pct_diff = round(abs(close_price[0] - close_price[1]) / close_price[1] * 100, 2)
     print(f"Pct Difference: {pct_diff}")
     if close_price[0] > close_price[1]:
         stock_arrow = "🔺"
@@ -57,6 +57,7 @@ def calc_stock(close_price):
     else:
         stock_arrow = "="
     return diff_price, pct_diff, stock_arrow
+
 
 # News Pull
 def pull_news_headline():
@@ -67,6 +68,7 @@ def pull_news_headline():
     article_headline = [headline['title'] for headline in format_news_dict]
     return article_headline
 
+
 def pull_news_description():
     response = requests.get(NEWS_ENDPOINT, params=news_parameters)
     response.raise_for_status()
@@ -75,10 +77,11 @@ def pull_news_description():
     article_description = [description['description'] for description in format_news_dict]
     return article_description
 
+
 def text_news(stock, news_h, news_d) -> list:
-    for msg in range(0,3):
+    for msg in range(0, 3):
         news_text = f"{STOCK_NAME} {stock[1]}% {stock[2]}\n" \
-           f"Headline: {news_h[msg]}\nBrief: {news_d[msg]}"
+                    f"Headline: {news_h[msg]}\nBrief: {news_d[msg]}"
         message = client.messages \
             .create(
             body=news_text,
@@ -88,17 +91,10 @@ def text_news(stock, news_h, news_d) -> list:
         print(message.status)
 
 
-
-
-
-
-
-
-#Main Loop
+# Main Loop
 
 stock_close_price = stock_pull()
 stock_tuple = calc_stock(stock_close_price)
-
 
 if stock_tuple[1] > 5:
     news_headline = pull_news_headline()
