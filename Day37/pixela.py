@@ -16,7 +16,7 @@ now = datetime.now()
 print(now.strftime('%Y%m%d'))
 pixela_endpoint = "https://pixe.la/v1/users"
 pixela_token = config('PIXELA_TOKEN')
-pixela_username = "robertobobsono"
+pixela_username = config('PIXELA_USERNAME')
 pixela_graphid = "graph666"
 
 header = {
@@ -39,7 +39,7 @@ graph_parameters = {
 }
 
 pixel_parameters = {
-    "date": "20200301",#now.strftime('%Y%m%d'),
+    "date": now.strftime('%Y%m%d'),
     "quantity": "1",
 
 }
@@ -60,11 +60,11 @@ response = requests.post(url=pixela_endpoint, json=user_parameters)
 
 response_graph = requests.post(url=f"{pixela_endpoint}/{pixela_username}/graphs", json=graph_parameters, headers=header)
 
-# Add Pixel to Graph
-
+Add Pixel to Graph
+'''
 response_pixel = requests.post(url=f"{pixela_endpoint}/{pixela_username}/graphs/{pixela_graphid}", json=pixel_parameters, headers=header)
 
-
+'''
 # Fix Bad Pixel Data
 
 response_pixel = requests.put(url=f"{pixela_endpoint}/{pixela_username}/graphs/{pixela_graphid}/20200301", json=put_parameters, headers=header)
