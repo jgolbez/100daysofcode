@@ -24,13 +24,27 @@ class NotificationManager:
         self.test_phone = test_phone
 
     # If lower fare is available than entered in Google sheet for this city, pull in flight details and send text
-    def notify_sms(self, n_fare, n_dep_city, n_dep_code, n_arr_city, n_arr_code, n_dep_date, n_ret_date):
-        message = client.messages \
-            .create(
-            body=f"Low Price Alert! Only {n_fare} to fly from {n_dep_city}-{n_dep_code} to {n_arr_city}-{n_arr_code},"
-                 f"from {n_dep_date} to {n_ret_date}.",
-            from_=f"+{twilio_phone}",
-            to=f"+{test_phone}"
-        )
+    def notify_sms(self, n_fare, n_dep_city, n_dep_code, n_arr_city, n_arr_code, n_dep_date, n_ret_date, n_stopovers=0,
+                   n_via_city=""):
 
+        if n_stopovers > 0:
+            print(f"Notify: More stopovers needed for {n_arr_code}")
+            message = client.messages \
+                .create(
+                body=f"Low Price Alert! Only {n_fare} to fly from {n_dep_city}-{n_dep_code} to {n_arr_city}-{n_arr_code},"
+                    f"from {n_dep_date} to {n_ret_date}.\n Flight has {n_stopovers} legs via {n_via_city}.",
+
+                from_=f"+{twilio_phone}",
+                to=f"+{test_phone}"
+                )
+        else:
+            print(f"Notify: No stopovers needed for {n_arr_code}")
+            message = client.messages \
+                .create(
+                body=f"Low Price Alert! Only {n_fare} to fly from {n_dep_city}-{n_dep_code} to {n_arr_city}-{n_arr_code},"
+                     f"from {n_dep_date} to {n_ret_date}.",
+
+                from_=f"+{twilio_phone}",
+                to=f"+{test_phone}"
+            )
 

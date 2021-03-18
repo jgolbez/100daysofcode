@@ -18,6 +18,7 @@ now = datetime.now()
 current_time = now.strftime("%d/%m/%Y")
 fly_from_date = (now + timedelta(days=1)).strftime("%d/%m/%Y")
 fly_to_date = (now + timedelta(days=(6*30))).strftime("%d/%m/%Y")
+print(f"Search for flights leaving between {fly_from_date} and {fly_to_date}")
 length_stay_min = 7
 length_stay_max = 28
 
@@ -68,31 +69,52 @@ class FlightSearch:
             "curr": "USD",
             "adults": 4,
             "one_for_city": 1,
+            "max_stopovers": 0,
         }
         print(f"Now searching for flights to {city_code}")
         f_search = requests.get(url=f"{self.api_url}v2/search", params=parameters, headers=self.api_headers)
         f_search.raise_for_status()
+        print(f_search.json())
         try:
             f_dict = f_search.json()['data'][0]
         except IndexError:
-            print(f"No flights to {city_code} available.")
-            return None
-        f_fare = f_dict['price']
-        f_dep_city = "Raleigh"
-        f_dep_code = "RDU"
-        f_arr_city = f_dict['cityTo']
-        f_arr_code = city_code
-        f_dep_date = f_dict['route'][0]['local_departure'].split('T')[0]
-        f_ret_date = f_dict['route'][1]['local_departure'].split('T')[0]
-        flight = FlightData(f_fare, f_arr_city, f_arr_code, f_dep_date, f_ret_date)
-        #DEBUG print(f"Fare:{f_fare}")
-        #DEBUG print(f"Departure City:{f_dep_city}")
-        #DEBUG print(f"Departure Code:{f_dep_code}")
-        #DEBUG print(f"Arrival City:{f_arr_city}")
-        #DEBUG print(f"Arrival Code:{f_arr_code}")
-        #DEBUG print(f"Departure Date:{f_dep_date}")
-        #DEBUG print(f"Return Date:{f_ret_date}")
-        return flight
+            parameters['max_stopovers'] = 2
+            f_search = requests.get(url=f"{self.api_url}v2/search", params=parameters, headers=self.api_headers)
+            f_search.raise_for_status()
+            print(f" Rerunning with up to 2 max stopovers\n {f_search.json()}")
+            try:
+                f_dict = f_search.json()['data'][0]
+            except IndexError:
+                print("No flights are available")
+                return None
+            f_fare = f_dict['price']
+            f_dep_city = "Raleigh"
+            f_dep_code = "RDU"
+            f_arr_city = f_dict['cityTo']
+            f_arr_code = city_code
+            f_dep_date = f_dict['route'][0]['local_departure'].split('T')[0]
+            f_ret_date = f_dict['route'][1]['local_departure'].split('T')[0]
+            f_stop_over = 1
+            f_via_city = f_dict['route'][0]['cityTo']
+            flight = FlightData(f_fare, f_arr_city, f_arr_code, f_dep_date, f_ret_date, f_stop_over, f_via_city)
+            return flight
+        else:
+            f_fare = f_dict['price']
+            f_dep_city = "Raleigh"
+            f_dep_code = "RDU"
+            f_arr_city = f_dict['cityTo']
+            f_arr_code = city_code
+            f_dep_date = f_dict['route'][0]['local_departure'].split('T')[0]
+            f_ret_date = f_dict['route'][1]['local_departure'].split('T')[0]
+            flight = FlightData(f_fare, f_arr_city, f_arr_code, f_dep_date, f_ret_date)
+            print(f"Fare:{f_fare}")
+            print(f"Departure City:{f_dep_city}")
+            print(f"Departure Code:{f_dep_code}")
+            print(f"Arrival City:{f_arr_city}")
+            print(f"Arrival Code:{f_arr_code}")
+            print(f"Departure Date:{f_dep_date}")
+            print(f"Return Date:{f_ret_date}")
+            return flight
 
 
 

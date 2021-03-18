@@ -22,12 +22,13 @@ class DataManager:
     def get_sheet(self):
         sheety_response = requests.get(url=self.sheety_url, headers=self.sheety_headers)
         sheety_response.raise_for_status()
+        print(sheety_response.json())
         return sheety_response.json()['prices']
         #TESTING output below
-        # DEBUG return [{'city': 'Barcelona', 'iataCode': '', 'lowestPrice': 4000, 'id': 2},
-        #DEBUG            {'city': 'Tokyo', 'iataCode': '', 'lowestPrice': 500, 'id': 3},
-        #DEBUG            {'city': 'Taipei', 'iataCode': 'TPE', 'lowestPrice': 350, 'id': 4},
-        #DEBUG            {'city': 'Orlando', 'iataCode': 'MCO', 'lowestPrice': 350, 'id': 5}]
+        #return [{'city': 'Barcelona', 'iataCode': '', 'lowestPrice': 4000, 'id': 2},
+        #            {'city': 'Tokyo', 'iataCode': '', 'lowestPrice': 500, 'id': 3},
+        #            {'city': 'Taipei', 'iataCode': 'TPE', 'lowestPrice': 350, 'id': 4},
+        #            {'city': 'Orlando', 'iataCode': 'MCO', 'lowestPrice': 350, 'id': 5}]
 
 #If any cities lack an airport/city code, update the sheet with the airport/city code based on Tequila API search
 #to avoid having to do it next time

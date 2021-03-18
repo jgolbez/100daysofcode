@@ -4,13 +4,13 @@
 from data_manager import DataManager
 from flight_search import FlightSearch
 from notification_manager import NotificationManager
-
+from customer_info import gather_info, Customer
 
 # Pull Google sheet data and build list of cities missing codes (if needed)
 sheet = DataManager()
-#print(sheet.sheet_data)
+print(sheet.sheet_data)
 blank_city_codes = [city['city'] for city in sheet.sheet_data if city['iataCode'] == '']
-#print(blank_city_codes)
+print(blank_city_codes)
 
 
 # Access flight search methods
@@ -37,8 +37,10 @@ for city in sheet.sheet_data:
         if city['iataCode'] == flight.f_arr_code:
             if int(city['lowestPrice']) > int(flight.f_fare):
                 notify = NotificationManager()
+                print(f"Found a hit! Notifying about {city['iataCode']}")
                 notify.notify_sms(flight.f_fare, flight.f_dep_city, flight.f_dep_code, flight.f_arr_city,
-                                             flight.f_arr_code, flight.f_dep_date, flight.f_ret_date)
+                                             flight.f_arr_code, flight.f_dep_date, flight.f_ret_date,
+                                  flight.f_stopovers, flight.f_via_city)
 
 
 
