@@ -354,7 +354,21 @@ elif valid_par == True:
     
 
 
+```
+Calculate the volume of a pramid:
+Relevant geometry equations:
+Volume = base area x height x 1/3
+Base area = base length x base width.
+```
+def calc_pyramid_volume(length, width, height):
+    base = length * width
+    volume = (base * height) * 1/3
+    return volume
 
+length = float(input())
+width = float(input())
+height = float(input())
+print('Volume for', length, width, height, "is:", calc_pyramid_volume(length, width, height))
 
 
 
