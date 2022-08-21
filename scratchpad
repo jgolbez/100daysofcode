@@ -19,6 +19,7 @@ the output is:
 0.65
 The 5 indicates that there are five floating-point values in the list, namely 30.0, 50.0, 10.0, 100.0, and 65.0. 100.0 is the largest value in the list, so each value is divided by 100.0.
 ```
+
 float_list = []
 num_input = int(input())
 while num_input > 0:
@@ -39,3 +40,322 @@ for num in new_float_list:
     print('{:.2f}'.format(num))
     
     
+    
+    
+    
+    
+```
+As long as x is greater than 0
+   Output x modulo 2 (remainder is either 0 or 1)
+   Assign x with x divided by 2
+Note: The above algorithm outputs the 0's and 1's in reverse order.
+
+Ex: If the input is:
+
+6
+the output is:
+
+011
+6 in binary is 110; the algorithm outputs the bits in reverse.
+```
+number = int(input())
+binary_list = []
+while number > 0:
+    binary_bits = number % 2
+    number = int(number / 2)
+    binary_list.append((int(binary_bits)))
+
+#binary_list.reverse()
+
+for bits in binary_list:
+    print(bits, end = '')
+print()
+
+
+
+```
+Many user-created passwords are simple and easy to guess. Write a program that takes a simple password and makes it stronger by replacing characters using the key below, and by appending "!" to the end of the input string.
+
+i becomes 1
+a becomes @
+m becomes M
+B becomes 8
+s becomes $
+Ex: If the input is:
+
+mypassword
+the output is:
+
+Myp@$$word!
+```
+word = input()
+password = ''
+
+for letter in word:
+    if letter == 'i':
+        password += '1'
+    elif letter == 'a':
+        password += '@'
+    elif letter == 'm':
+        password += 'M'
+    elif letter == 'B':
+        password += '8'
+    elif letter == 's':
+        password += '$'
+    else:
+        password += letter
+
+password += '!'
+print(password)
+
+        
+
+
+
+```
+Numerous engineering and scientific applications require finding solutions to a set of equations. Ex: 8x + 7y = 38 and 3x - 5y = -1 have a solution x = 3, y = 2. Given integer coefficients of two linear equations with variables x and y, use brute force to find an integer solution for x and y in the range -10 to 10.
+
+Ex: If the input is:
+
+8
+7
+38
+3
+-5
+-1
+Then the output is:
+
+x = 3 , y = 2
+Use this brute force approach:
+
+For every value of x from -10 to 10
+   For every value of y from -10 to 10
+      Check if the current x and y satisfy both equations. If so, output the solution, and finish.
+Ex: If no solution is found, output:
+
+There is no solution
+You can assume the two equations have no more than one solution.
+```
+# Read in first equation, ax + by = c '''
+a = int(input())
+b = int(input())
+c = int(input())
+
+# Read in second equation, dx + ey = f '''
+d = int(input())
+e = int(input())
+f = int(input())
+
+solutionx = 0
+solutiony = 0
+
+solutiond = 0
+solutione = 0
+
+for x in range(-10, 10):
+    for y in range (-10, 10):
+        if (x * a) + (b * y) == c and (x * d) + (y * e) ==f:
+            solutionx = x
+            solutiony = y
+            break
+        
+if solutionx != 0 and solutiony != 0:
+    print(f"x = {solutionx} , y = {solutiony}")
+else:
+    print("There is no solution")
+
+
+
+
+```
+Primary U.S. interstate highways are numbered 1-99. Odd numbers (like the 5 or 95) go north/south, and evens (like the 10 or 90) go east/west. Auxiliary highways are 
+numbered 100-999, and service the primary highway indicated by the rightmost two digits. Thus, I-405 services I-5, and I-290 services I-90.
+
+Given a highway number, indicate whether it is a primary or auxiliary highway. If auxiliary, indicate what primary highway it serves. Also indicate if the (primary)
+highway runs north/south or east/west.
+```
+
+highway_number = int(input())
+highway_str = str(highway_number)
+
+if len(highway_str) == 2:
+    hwy_type = "primary"
+else:
+    hwy_type = "auxiliary"
+
+if highway_number < 1000 and highway_number > 0:
+    if highway_number > 0 and highway_number <= 99:
+        if highway_number % 2 == 0 and len(highway_str) == 2:
+            print(f"I-{highway_str} is {hwy_type}, going east/west.")
+        elif highway_number % 2 != 0 and len(highway_str) == 2:
+            print(f"I-{highway_str} is {hwy_type}, going north/south.")
+    if highway_number >= 100 and highway_number < 999:
+        if highway_number % 2 == 0 and len(highway_str) == 3:
+            print(f"I-{highway_str} is {hwy_type}, serving I-{highway_str[1:]}, going east/west.")
+        elif highway_number % 2 != 0 and len(highway_str) == 3:
+            print(f"I-{highway_str} is {hwy_type}, serving I-{highway_str[1:]}, going north/south.")
+else:
+    print(f"{highway_number} is not a valid interstate highway number.")
+    
+
+
+```
+Write a program that takes a date as input and outputs the date's season. The input is a string to represent the month and an int to represent the day.
+The dates for each season are:
+Spring: March 20 - June 20
+Summer: June 21 - September 21
+Autumn: September 22 - December 20
+Winter: December 21 - March 19
+```
+input_month = input()
+input_day = int(input())
+
+spring_month_list = ['March', 'April', "May", "June"]
+summer_month_list = ['June', 'July', "August", "September"]
+autumn_month_list = ['September', 'October', "November", "December"]
+winter_month_list = ['December', 'January', "February", "March"]
+
+month_day_dict = {
+    'January' : 31,
+    'February': 28,
+    'March' : 31,
+    'April' : 30,
+    'May' : 31,
+    'June' : 30,
+    'July' : 31,
+    'August' : 31,
+    'September' : 30,
+    'October' : 31,
+    'November' : 30,
+    'December' : 31
+    }
+
+valid_date = True        
+valid_month = True
+if input_month not in dict.keys(month_day_dict):
+    valid_month = False
+    print('Invalid')
+elif month_day_dict[input_month] < input_day or input_day <= 0:
+        valid_date = False
+        print('Invalid')
+    
+    
+if valid_date == True and valid_month == True:
+    if input_month in spring_month_list:
+        if input_month == 'March':
+            if input_day < 20:
+                print("Winter")
+            else:
+                print("Spring")
+        elif input_month == 'June':
+             if input_day < 21:
+                 print("Spring")
+             else:
+                 print("Summer")
+        else: 
+            print("Spring")
+    elif input_month in summer_month_list:
+        if input_month == 'June':
+            if input_day < 21:
+                print("Spring")
+            else:
+                print("Summer")
+        elif input_month == 'September':
+             if input_day < 22:
+                 print("Summer")
+             else:
+                 print("Autumn")
+        else:
+            print("Summer")
+    elif input_month in autumn_month_list:
+        if input_month == 'September':
+            if input_day < 22:
+                print("Summer")
+            else:
+                print("Autumn")
+        elif input_month == 'December':
+             if input_day < 21:
+                 print("Autumn")
+             else:
+                 print("Winter")
+        else: 
+            print("Autumn")
+    elif input_month in winter_month_list:
+        if input_month == 'December':
+            if input_day < 21:
+                print("Autumn")
+            else:
+                print("Winter")
+        elif input_month == 'March':
+             if input_day < 20:
+                 print("Winter")
+             else:
+                 print("Spring")
+        else:
+            print("Winter")
+
+
+
+
+```
+A year in the modern Gregorian Calendar consists of 365 days. In reality, the earth takes longer to rotate around the sun. To account for the difference in time, 
+every 4 years, a leap year takes place. A leap year is when a year has 366 days: An extra day, February 29th. The requirements for a given year to be a leap year are:
+1) The year must be divisible by 4
+2) If the year is a century year (1700, 1800, etc.), the year must be evenly divisible by 400
+```
+is_leap_year = False
+   
+input_year = int(input())
+
+if input_year % 100 == 0:
+    if input_year % 400 == 0:
+        is_leap_year = True
+elif input_year % 4 == 0:
+    is_leap_year = True
+
+if is_leap_year == False:
+    print(f"{input_year} - not a leap year")
+else:
+    print(f"{input_year} - leap year")
+
+
+
+
+
+
+```
+Golf scores record the number of strokes used to get the ball in the hole. The expected number of strokes varies from hole to hole and is called par (i.e. 3, 4, or 5). Each score's name is based on the actual strokes taken compared to par:
+"Eagle": number of strokes is two less than par
+"Birdie": number of strokes is one less than par
+"Par": number of strokes equals par
+"Bogey": number of strokes is one more than par
+Given two integers that represent par and the number of strokes used, write a program that prints the appropriate score name. Print "Error" if par is not 3, 4, or 5.
+```
+par_input = int(input())
+stroke_input = int(input())
+valid_par = True
+
+if par_input in [3, 4, 5]:
+    valid_par = True
+else:
+    valid_par = False
+
+if valid_par == False:
+    print("Error")
+elif valid_par == True:
+    if stroke_input == (par_input):
+        print("Par")
+    elif stroke_input == (par_input -1):
+        print("Birdie")
+    elif stroke_input == (par_input -2):
+        print("Eagle")
+    elif stroke_input > par_input:
+        print("Bogey")
+    
+
+
+
+
+
+
+
