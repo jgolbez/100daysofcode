@@ -372,4 +372,65 @@ print('Volume for', length, width, height, "is:", calc_pyramid_volume(length, wi
 
 
 
+```
+Take in 5 integers via input and organize them.
+Match the output with the below sample:
+
+Enter 5 integers:
+0 5
+1 99
+2 -44
+3 0
+4 12
+Numbers: 5 99 -44 0 12
+Odd numbers: 5 99
+Negative numbers: -44
+```
+
+#
+size = 5
+
+def get_numbers(num):
+    numbers = []
+    user_input = input('Enter {} integers:\n'.format(num))
+
+    i = 0
+    for token in user_input.split():
+        number = int(token)     # Convert string input into integer
+        numbers.append(number)  # Add to numbers list
+        print(i, number)
+        i += 1
+    return numbers
+
+def print_all_numbers(numbers):
+    print("Numbers: ", end=' ')
+    for nums in numbers:
+        print(nums, end=' ')
+    print()
+
+def print_odd_numbers(numbers):
+    odd_list = []
+    for odd in numbers:
+        if odd % 2 != 0:
+            odd_list.append(odd)    
+    print('Odd numbers:', end=' ')
+    for odd in odd_list:
+        print(odd, end=' ')
+    print()
+
+def print_negative_numbers(numbers):
+    neg_list = []
+    for num in numbers:
+        if num < 0:
+            neg_list.append(num)
+    print('Negative numbers:', end=' ')
+    for neg in neg_list:
+        print(neg, end=' ')
+    print()
+
+
+nums = get_numbers(size)
+print_all_numbers(nums)
+print_odd_numbers(nums)
+print_negative_numbers(nums)
 
