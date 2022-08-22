@@ -434,3 +434,25 @@ print_all_numbers(nums)
 print_odd_numbers(nums)
 print_negative_numbers(nums)
 
+
+
+
+```
+Write a function swap that swaps the first and last elements of a list argument.
+
+Sample output with input: 'all,good,things,must,end,here'
+['here', 'good', 'things', 'must', 'end', 'all']
+```
+def swap(values):
+    firstindex = 0
+    lastindex = len(values) - 1
+    tempfirst = values[firstindex]
+    templast = values[lastindex]
+    values[firstindex] = templast
+    values[lastindex] = tempfirst
+
+values_list = input().split(',')  # Program receives comma-separated values like 5,4,12,19
+swap(values_list)
+print(values_list)
+
+
