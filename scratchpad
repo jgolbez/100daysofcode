@@ -556,3 +556,31 @@ while user_input != '5':
     print(user_input)
 
 
+
+
+
+```
+Contact List (Lists Only)
+Write a program that first takes in word pairs that consist of a name and a phone number (both strings). That list is followed by a name, and your program should 
+output the phone number associated with that name.
+
+Ex: If the input is:
+
+Joe 123-5432 Linda 983-4123 Frank 867-5309
+Frank
+the output is:
+
+867-5309
+```
+inputstr = input().split()
+namestr = input()
+namelist = []
+phonelist = []
+
+namelist = inputstr[0::2]
+phonelist = inputstr[1::2]
+
+for name in namelist:
+    if name == namestr:
+        print(phonelist[namelist.index(name)])
+     
