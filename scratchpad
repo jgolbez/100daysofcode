@@ -613,3 +613,116 @@ if __name__ == '__main__':
         print('In order')
     else:
         print('Not in order')
+
+
+```
+Parsing Dates
+Write a program to read dates from input, one date per line. Each date's format must be as follows: March 1, 1990. Any date not following that format is incorrect and should 
+be ignored. The input ends with -1 on a line alone. Output each correct date as: 3/1/1990.
+
+Hint: Use string[start:end] to get a substring when parsing the string and extracting the date. Use the split() method to break the input into tokens.
+
+Ex: If the input is:
+
+March 1, 1990
+April 2 1995
+7/15/20
+December 13, 2003
+-1
+then the output is:
+
+3/1/1990
+12/13/2003
+```
+def get_month_as_int(monthString):
+
+    if monthString == 'January':
+        month_int = 1
+    elif monthString == 'February':
+        month_int = 2
+    elif monthString == 'March':
+        month_int = 3
+    elif monthString == 'April':
+        month_int = 4
+    elif monthString == 'May':
+        month_int = 5
+    elif monthString == 'June':
+        month_int = 6
+    elif monthString == 'July':
+        month_int = 7
+    elif monthString == 'August':
+        month_int = 8
+    elif monthString == 'September':
+        month_int = 9
+    elif monthString == 'October':
+        month_int = 10
+    elif monthString == 'November':
+        month_int = 11
+    elif monthString == 'December':
+        month_int = 12
+    else:
+        month_int = 0
+
+    return month_int
+
+
+user_string = ''
+
+while user_string != '-1':
+    user_string = input()
+    if user_string != '-1':
+        if ',' in user_string:
+            user_split_string = user_string.split(' ')
+            if user_split_string[1].endswith(','):
+                month_int= get_month_as_int(user_split_string[0])
+                date_int = user_split_string[1].replace(',', '')
+                year_int = user_split_string[2]
+                print(f"{month_int}/{date_int}/{year_int}")
+
+
+
+```
+Car Wash
+Write a program to calculate the total price for car wash services. A base car wash is $10. A dictionary with each additional service and the corresponding 
+cost has been provided. Two additional services can be selected. A '-' signifies an additional service was not selected. Output all selected services, according 
+to the input order, along with the corresponding costs and then the total price for all car wash services.
+
+Ex: If the input is:
+
+Tire shine
+Wax
+the output is:
+
+ZyCar Wash
+Base car wash -- $10
+Tire shine -- $2
+Wax -- $3
+----
+Total price: $15
+
+```
+services = { 'Air freshener' : 1 , 'Rain repellent': 2, 'Tire shine' : 2, 'Wax' : 3, 'Vacuum' : 5 }
+base_wash = 10
+total = 0
+addon = 0
+
+service_choice1 = input()
+service_choice2 = input()
+
+
+#output
+print("ZyCar Wash")
+print(f"Base car wash -- ${base_wash}")
+if service_choice1 in services.keys():
+    print(f"{service_choice1} -- ${services[service_choice1]}")
+    addon += services[service_choice1]
+if service_choice2 in services.keys():
+    print(f"{service_choice2} -- ${services[service_choice2]}")
+    addon += services[service_choice2]
+
+print("----")
+total = base_wash + addon
+print(f"Total price: ${total}")
+
+
+    
