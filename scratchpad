@@ -784,3 +784,37 @@ else:
     resultslist = result.split()
     for entry in resultslist:
         print(entry)
+
+
+
+```
+Write a program that first reads in the name of an input file, followed by two strings representing the lower and upper bounds of a search range. 
+The file should be read using the file.readlines() method. The input file contains a list of alphabetical, ten-letter strings, each on a separate line. 
+Your program should output all strings from the list that are within that range (inclusive of the bounds).
+Notes:
+
+There is a newline at the end of the output.
+All input files are hosted in the zyLab and file names can be directly referred to. 
+In the tests, the first word input always comes alphabetically before the second word input.
+```
+
+def read_file(file):
+    with open(file) as f:
+        words = f.read()
+        wordlist = words.split('\n')
+        return wordlist
+        
+
+file = input()
+firstword = input()
+lastword = input()
+
+wordlist = read_file(file)
+
+resultlist = []
+for word in wordlist:
+    if firstword <= word and lastword >= word:
+        resultlist.append(word)
+
+for word in resultlist:
+    print(word)
