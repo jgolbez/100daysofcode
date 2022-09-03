@@ -818,3 +818,38 @@ for word in wordlist:
 
 for word in resultlist:
     print(word)
+    
+
+
+```
+Write a program that first reads in the name of an input file and then reads the file using the csv.reader() method. 
+The file contains a list of words separated by commas. Your program should output the words and their frequencies
+(the number of times each word appears in the file) without any duplicates.
+```
+import csv
+file = input()
+
+def create_list(file):
+    with open(file, 'r') as f:
+        word_list = []
+        reader = csv.reader(f)
+        for rows in reader:
+            word_list.append(rows)
+        return word_list
+
+def count_words(word_list):
+    word_count = {}
+    for word in word_list:
+        if word in word_count.keys():
+            word_count[word] += 1
+        elif word not in word_count.keys():
+            word_count[word] = 1
+    return word_count
+
+x = create_list(file)
+word_list = x[0]
+word_count = count_words(word_list)
+for k, v in word_count.items():
+    print(k, v)
+    
+
